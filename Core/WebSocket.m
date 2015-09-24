@@ -166,14 +166,13 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 	
 	if ((self = [super init]))
 	{
-		if (HTTP_LOG_VERBOSE)
-		{
+#if (HTTP_LOG_VERBOSE != 0)
 			NSData *requestHeaders = [aRequest messageData];
 			
 			NSString *temp = [[NSString alloc] initWithData:requestHeaders encoding:NSUTF8StringEncoding];
 			HTTPLogVerbose(@"%@[%p] Request Headers:\n%@", THIS_FILE, self, temp);
-		}
-		
+#endif
+        
 		websocketQueue = dispatch_queue_create("WebSocket", NULL);
 		request = aRequest;
 		
@@ -409,12 +408,11 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 	NSData *responseHeaders = [wsResponse messageData];
 	
 	
-	if (HTTP_LOG_VERBOSE)
-	{
+#if (HTTP_LOG_VERBOSE != 0)
 		NSString *temp = [[NSString alloc] initWithData:responseHeaders encoding:NSUTF8StringEncoding];
 		HTTPLogVerbose(@"%@[%p] Response Headers:\n%@", THIS_FILE, self, temp);
-	}
-	
+#endif
+    
 	[asyncSocket writeData:responseHeaders withTimeout:TIMEOUT_NONE tag:TAG_HTTP_RESPONSE_HEADERS];
 }
 
@@ -491,8 +489,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 	
 	[asyncSocket writeData:responseBody withTimeout:TIMEOUT_NONE tag:TAG_HTTP_RESPONSE_BODY];
 	
-	if (HTTP_LOG_VERBOSE)
-	{
+#if (HTTP_LOG_VERBOSE != 0)
 		NSString *s1 = [[NSString alloc] initWithData:d1 encoding:NSASCIIStringEncoding];
 		NSString *s2 = [[NSString alloc] initWithData:d2 encoding:NSASCIIStringEncoding];
 		NSString *s3 = [[NSString alloc] initWithData:d3 encoding:NSASCIIStringEncoding];
@@ -506,8 +503,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 		HTTPLogVerbose(@"key3 passed : raw(%@) str(%@)", d3, s3);
 		HTTPLogVerbose(@"key0 concat : raw(%@) str(%@)", d0, s0);
 		HTTPLogVerbose(@"responseBody: raw(%@) str(%@)", responseBody, sH);
-		
-	}
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
