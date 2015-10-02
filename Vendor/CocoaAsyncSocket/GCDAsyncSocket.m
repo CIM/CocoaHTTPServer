@@ -5865,7 +5865,9 @@ enum GCDAsyncSocketConfig
 			NSDictionary *tlsSettings = tlsPacket->tlsSettings;
 			
 			NSNumber *value;
-			
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 			value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsAnyRoot];
 			if (value && [value boolValue] == YES)
 				canUseSecureTransport = NO;
@@ -5881,6 +5883,8 @@ enum GCDAsyncSocketConfig
 			value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsExpiredCertificates];
 			if (value && [value boolValue] == YES)
 				canUseSecureTransport = NO;
+#pragma clang diagnostic pop
+
 		}
 		#endif
 		
@@ -6229,9 +6233,12 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	}
 	
 	// 2. kCFStreamSSLAllowsAnyRoot
-	
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsAnyRoot];
-	if (value)
+#pragma clang diagnostic pop
+
+  if (value)
 	{
 		#if TARGET_OS_IPHONE
 		NSAssert(NO, @"Security option unavailable via SecureTransport in iOS - kCFStreamSSLAllowsAnyRoot");
@@ -6250,9 +6257,12 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	}
 	
 	// 3. kCFStreamSSLAllowsExpiredRoots
-	
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsExpiredRoots];
-	if (value)
+#pragma clang diagnostic pop
+
+  if (value)
 	{
 		#if TARGET_OS_IPHONE
 		NSAssert(NO, @"Security option unavailable via SecureTransport in iOS - kCFStreamSSLAllowsExpiredRoots");
@@ -6292,9 +6302,12 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	}
 	
 	// 5. kCFStreamSSLAllowsExpiredCertificates
-	
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsExpiredCertificates];
-	if (value)
+#pragma clang diagnostic pop
+
+  if (value)
 	{
 		#if TARGET_OS_IPHONE
 		NSAssert(NO, @"Security option unavailable via SecureTransport in iOS - kCFStreamSSLAllowsExpiredCertificates");
@@ -6742,6 +6755,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	
 	LogInfo(@"CFStreamThread: Stopped");
 }}
++(void)doNothingAtAll:(id)stuff{}
 
 + (void)scheduleCFStreams:(GCDAsyncSocket *)asyncSocket
 {
