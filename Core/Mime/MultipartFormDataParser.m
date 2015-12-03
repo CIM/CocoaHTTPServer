@@ -11,12 +11,6 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 #endif
 
-#ifdef __x86_64__
-#define FMTNSINT "li"
-#else
-#define FMTNSINT "i"
-#endif
-
 
 //-----------------------------------------------------------------
 // interface MultipartFormDataParser (private)
@@ -261,7 +255,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 			NSData* decodedData = [MultipartFormDataParser decodedDataFromData:[NSData dataWithBytesNoCopy:(char*)workingData.bytes + offset length:workingData.length - offset - sizeToLeavePending freeWhenDone:NO] encoding:currentEncoding];
 			
 			if( [delegate respondsToSelector:@selector(processContent:WithHeader:)] ) {
-				HTTPLogVerbose(@"MultipartFormDataParser: Processed %"FMTNSINT" bytes of body", (int)sizeToPass);
+				HTTPLogVerbose(@"MultipartFormDataParser: Processed %li bytes of body", (long)sizeToPass);
 
 				[delegate processContent: decodedData WithHeader:currentHeader];
 			}
