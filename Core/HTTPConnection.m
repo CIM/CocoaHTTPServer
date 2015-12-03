@@ -2,7 +2,7 @@
 #import "HTTPServer.h"
 #import "HTTPConnection.h"
 #import "HTTPMessage.h"
-#import "HTTPResponse.h"
+//#import "HTTPResponse.h" // imported by HTTPFileResponse and HTTPAsyncFileResponse
 #import "HTTPAuthenticationRequest.h"
 #import "DDNumber.h"
 #import "DDRange.h"

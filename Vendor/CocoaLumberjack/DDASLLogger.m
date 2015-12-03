@@ -1,5 +1,6 @@
 #import "DDASLLogger.h"
 
+#import <asl.h>
 #import <libkern/OSAtomic.h>
 
 /**
@@ -17,7 +18,9 @@
 #endif
 
 
-@implementation DDASLLogger
+@implementation DDASLLogger {
+    aslclient client;
+}
 
 static DDASLLogger *sharedInstance;
 
